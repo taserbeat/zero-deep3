@@ -14,3 +14,19 @@
 ```bash
 bash setup.sh
 ```
+
+# ユニットテスト
+
+## 単一ファイルのテストを実行する場合
+
+```bash
+pipenv run python -m unittest steps/step10.py
+```
+
+## 特定ディレクトリ配下の複数ファイルでテストを実行する場合
+
+テスト対象のディレクトリが`./tests/`の場合
+
+```bash
+pipenv run python -m unittest discover tests
+```
