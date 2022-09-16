@@ -1,6 +1,7 @@
 import weakref
 import numpy as np
 import contextlib
+import dezero
 
 
 # =============================================================================
@@ -113,6 +114,33 @@ class Variable:
             if not retain_grad:
                 for y in f.outputs:
                     y().grad = None  # y is weakref
+
+    def unchain_backward(self):
+        if self.creator is not None:
+            funcs = [self.creator]
+            while funcs:
+                f = funcs.pop()
+                for x in f.inputs:
+                    if x.creator is not None:
+                        funcs.append(x.creator)
+                        x.unchain()
+
+    def reshape(self, *shape):
+        if len(shape) == 1 and isinstance(shape[0], (tuple, list)):
+            shape = shape[0]
+        return dezero.functions.reshape(self, shape)
+
+    def transpose(self, *axes):
+        if len(axes) == 0:
+            axes = None
+        elif len(axes) == 1:
+            if isinstance(axes[0], (tuple, list) or axes[0] is None):
+                axes = axes[0]
+        return dezero.functions.transpose(self, axes)
+
+    @property
+    def T(self):
+        return dezero.functions.transpose(self)
 
 
 def as_variable(obj):
