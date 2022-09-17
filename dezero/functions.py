@@ -51,6 +51,36 @@ def tanh(x):
     return Tanh()(x)
 
 
+class Exp(Function):
+    def forward(self, x):
+        y = np.exp(x)
+        return y
+
+    def backward(self, gy):
+        y = self.outputs[0]()  # weakref
+        gx = gy * y
+        return gx
+
+
+def exp(x):
+    return Exp()(x)
+
+
+class Log(Function):
+    def forward(self, x):
+        y = np.log(x)
+        return y
+
+    def backward(self, gy):
+        x, = self.inputs
+        gx = gy / x
+        return gx
+
+
+def log(x):
+    return Log()(x)
+
+
 # =============================================================================
 # Tensor operations: reshape / transpose / get_item / expand_dims / flatten
 # =============================================================================
@@ -173,6 +203,61 @@ class MatMul(Function):
 
 def matmul(x, W):
     return MatMul()(x, W)
+
+
+class Linear(Function):
+    def forward(self, x, W, b):
+        y = x.dot(W)
+        if b is not None:
+            y += b
+        return y
+
+    def backward(self, gy):
+        x, W, b = self.inputs
+        gb = None if b.data is None else sum_to(gy, b.shape)
+        gx = matmul(gy, W.T)
+        gW = matmul(x.T, gy)
+        return gx, gW, gb
+
+
+def linear(x, W, b=None):
+    return Linear()(x, W, b)
+
+
+def linear_simple(x, W, b=None):
+    t = matmul(x, W)
+    if b is None:
+        return t
+
+    y = t + b
+    t.data = None  # type: ignore
+    return y
+
+# =============================================================================
+# activation function: sigmoid / relu / softmax / log_softmax / leaky_relu
+# =============================================================================
+
+
+def sigmoid_simple(x):
+    x = as_variable(x)
+    y = 1 / (1 + exp(-x))  # type: ignore
+    return y
+
+
+class Sigmoid(Function):
+    def forward(self, x):
+        # y = 1 / (1 + xp.exp(-x))
+        y = np.tanh(x * 0.5) * 0.5 + 0.5  # Better implementation
+        return y
+
+    def backward(self, gy):
+        y = self.outputs[0]()
+        gx = gy * y * (1 - y)  # type: ignore
+        return gx
+
+
+def sigmoid(x):
+    return Sigmoid()(x)
 
 
 # =============================================================================
