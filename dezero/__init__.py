@@ -22,6 +22,9 @@ else:
     from dezero.core import as_array  # noqa
     from dezero.core import as_variable  # noqa
     from dezero.core import setup_variable  # noqa
+    from dezero.core import Config  # noqa
+    from dezero.layers import Layer  # noqa
+    from dezero.models import Model  # noqa
 
     from dezero import functions  # noqa
     pass
