@@ -25,8 +25,10 @@ else:
     from dezero.core import Config  # noqa
     from dezero.layers import Layer  # noqa
     from dezero.models import Model  # noqa
+    from dezero.datasets import Dataset  # noqa
 
     from dezero import functions  # noqa
+    from dezero import datasets  # noqa
     pass
 
 setup_variable()  # noqa
