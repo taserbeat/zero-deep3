@@ -5,6 +5,7 @@
     "ms-python.vscode-pylance",
     "editorconfig.editorconfig",
     "foxundermoon.shell-format",
-    "joaompinto.vscode-graphviz"
+    "joaompinto.vscode-graphviz",
+    "njpwerner.autodocstring"
   ]
 }
