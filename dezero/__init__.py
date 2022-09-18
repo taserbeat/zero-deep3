@@ -15,6 +15,7 @@ if is_simple_core:
 
 else:
     from dezero.core import Variable  # noqa
+    from dezero.core import Parameter  # noqa
     from dezero.core import Function  # noqa
     from dezero.core import using_config  # noqa
     from dezero.core import no_grad  # noqa
