@@ -323,3 +323,4 @@ def setup_variable():
     Variable.__truediv__ = div  # type: ignore
     Variable.__rtruediv__ = rdiv  # type: ignore
     Variable.__pow__ = pow  # type: ignore
+    Variable.__getitem__ = dezero.functions.get_item  # type: ignore
