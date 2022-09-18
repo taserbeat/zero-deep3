@@ -103,11 +103,10 @@ def plot_dot_graph(output, verbose=True, to_file='graph.png'):
     except:  # noqa
         pass
 
+
 # =============================================================================
 # Utility functions for numpy (numpy magic)
 # =============================================================================
-
-
 def sum_to(x, shape):
     """Sum elements along axes to output an array of a given shape.
 
@@ -181,3 +180,24 @@ def max_backward_shape(x, axis):
 
     shape = [s if ax not in axis else 1 for ax, s in enumerate(x.shape)]
     return shape
+
+
+# =============================================================================
+# others
+# =============================================================================
+def get_deconv_outsize(size, k, s, p):
+    return s * (size - 1) + k - 2 * p
+
+
+def get_conv_outsize(input_size, kernel_size, stride, pad):
+    return (input_size + pad * 2 - kernel_size) // stride + 1
+
+
+def pair(x):
+    if isinstance(x, int):
+        return (x, x)
+    elif isinstance(x, tuple):
+        assert len(x) == 2
+        return x
+    else:
+        raise ValueError

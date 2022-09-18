@@ -16,10 +16,12 @@ class Dataset:
         self.prepare()
 
     def __getitem__(self, index):
-        assert np.isscalar(index)
+        assert np.isscalar(index)  # indexは整数(スカラ)だけに対応
         if self.label is None:
+            # 教師データなしの場合 (教師なし学習を想定)
             return self.transform(self.data[index]), None  # type: ignore
         else:
+            # 教師データありの場合
             return self.transform(self.data[index]), self.target_transform(self.label[index])  # type: ignore
 
     def __len__(self):
