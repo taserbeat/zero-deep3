@@ -146,3 +146,6 @@ dmypy.json
 # dot
 graph/opt/
 .dezero/
+
+# Artifacts
+artifacts/
