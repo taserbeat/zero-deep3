@@ -266,11 +266,10 @@ def linear_simple(x, W, b=None):
     t.data = None  # type: ignore
     return y
 
+
 # =============================================================================
 # activation function: sigmoid / relu / softmax / log_softmax / leaky_relu
 # =============================================================================
-
-
 def sigmoid_simple(x):
     x = as_variable(x)
     y = 1 / (1 + exp(-x))  # type: ignore
@@ -291,6 +290,22 @@ class Sigmoid(Function):
 
 def sigmoid(x):
     return Sigmoid()(x)
+
+
+class ReLU(Function):
+    def forward(self, x):
+        y = np.maximum(x, 0.0)
+        return y
+
+    def backward(self, gy):
+        x, = self.inputs
+        mask = x.data > 0
+        gx = gy * mask
+        return gx
+
+
+def relu(x):
+    return ReLU()(x)
 
 
 def softmax_simple(x, axis=1):
