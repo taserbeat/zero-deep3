@@ -26,6 +26,10 @@ def no_grad():
     return using_config('enable_backprop', False)
 
 
+def test_mode():
+    return using_config('train', False)
+
+
 # =============================================================================
 # Variable / Function
 # =============================================================================

@@ -19,6 +19,7 @@ else:
     from dezero.core import Function  # noqa
     from dezero.core import using_config  # noqa
     from dezero.core import no_grad  # noqa
+    from dezero.core import test_mode  # noqa
     from dezero.core import as_array  # noqa
     from dezero.core import as_variable  # noqa
     from dezero.core import setup_variable  # noqa
