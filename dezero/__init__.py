@@ -31,6 +31,7 @@ else:
 
     from dezero import functions  # noqa
     from dezero import datasets  # noqa
+    from dezero import cuda  # noqa
     pass
 
 setup_variable()  # noqa
