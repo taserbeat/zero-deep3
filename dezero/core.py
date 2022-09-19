@@ -9,6 +9,7 @@ import dezero
 # =============================================================================
 class Config:
     enable_backprop = True
+    train = True
 
 
 @contextlib.contextmanager

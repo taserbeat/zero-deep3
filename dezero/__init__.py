@@ -26,6 +26,8 @@ else:
     from dezero.layers import Layer  # noqa
     from dezero.models import Model  # noqa
     from dezero.datasets import Dataset  # noqa
+    from dezero.dataloaders import DataLoader  # noqa
+    from dezero.dataloaders import SeqDataLoader  # noqa
 
     from dezero import functions  # noqa
     from dezero import datasets  # noqa
