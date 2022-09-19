@@ -60,12 +60,21 @@ class Layer:
                 params_dict[key] = obj
 
     def save_weights(self, path):
-        self.to_cpu()
+        # データがCPUメモリ上にあることを保証する処理であるが、
+        # そもそも今回はCPUオンリーの想定で書いているので不要
+        # self.to_cpu()
 
         params_dict = {}
         self._flatten_params(params_dict)
         array_dict = {key: param.data for key, param in params_dict.items() if param is not None}
+
+        dir_path = os.path.dirname(path)
+
         try:
+            if not os.path.exists(dir_path):
+                os.makedirs(dir_path, exist_ok=True)
+                pass
+
             np.savez_compressed(path, **array_dict)
         except (Exception, KeyboardInterrupt) as e:  # noqa
             if os.path.exists(path):
