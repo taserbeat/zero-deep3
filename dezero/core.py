@@ -76,6 +76,9 @@ class Variable:
         self.creator = func
         self.generation = func.generation + 1
 
+    def unchain(self):
+        self.creator = None
+
     def cleargrad(self):
         self.grad = None
 
@@ -124,7 +127,7 @@ class Variable:
         if self.creator is not None:
             funcs = [self.creator]
             while funcs:
-                f = funcs.pop()
+                f: Function = funcs.pop()
                 for x in f.inputs:
                     if x.creator is not None:
                         funcs.append(x.creator)
